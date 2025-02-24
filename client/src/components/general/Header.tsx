@@ -16,7 +16,7 @@ const Header = () => {
           className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors cursor-pointer text-2xl font-helvetica font-semibold flex space-x-2 justify-center items-center"
         >
           <img
-            src="/placeholder.png"
+            src="https://thumbs.dreamstime.com/b/green-farm-logo-icon-design-can-be-used-as-complement-to-125643927.jpg"
             alt="app-logo"
             width="24px"
             className="h-[24px] active:animate-spin"
