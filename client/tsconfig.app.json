@@ -1,32 +1,23 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-=======
     "composite": true,
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-<<<<<<< HEAD
-=======
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
 
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-<<<<<<< HEAD
-=======
     "resolveJsonModule": true,
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
@@ -36,12 +27,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
-=======
-    "noFallthroughCasesInSwitch": true
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
   },
   "include": ["src"]
 }
