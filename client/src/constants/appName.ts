@@ -1,3 +1,3 @@
-const appName = "Bhumi";
+const appName = "Farm House";
 
 export default appName;
