@@ -1,11 +1,11 @@
 const toggleThemeModeAtRootElem = (theme: "light" | "dark") => {
-  const rootElem = document.getElementById("theme-root");
+  const rootElem = document.getElementById("theme-data");
   rootElem?.classList.remove("dark", "light");
   rootElem?.classList.add(theme);
 };
 
 const getThemeModeAtRootElem = () =>
-  document.getElementById("theme-root")?.classList.contains("dark")
+  document.getElementById("theme-data")?.classList.contains("dark")
     ? "dark"
     : "light";
 

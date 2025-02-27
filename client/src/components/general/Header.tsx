@@ -1,67 +1,44 @@
-import { Input } from "@/components/ui/input";
-import { Link, NavLink } from "react-router-dom";
-import appName from "@/constants/appName";
-import ProfileCard from "./ProfileCard";
-import { useState } from "react";
+import { useAuth, UserButton } from "@clerk/clerk-react"
+import { Link, NavLink } from "react-router-dom"
+import ThemeToggler from "./ThemeToggler"
+import { Loader2 } from "lucide-react";
 
-const Header = () => {
+const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/about", label: "About us" },
+];
 
-  const [search, setSearch] = useState("");
+function Header() {
+  const { isLoaded, isSignedIn } = useAuth();
 
   return (
     <>
-      <nav className="lg:h-[4.5rem] h-16 lg:py-5 pt-4 pb-[1rem] flex justify-between items-center space-x-2 px-5 lg:px-20 border-b-[1px] border-zinc-700 select-none">
-        <Link
-          to="/"
-          className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors cursor-pointer text-2xl font-helvetica font-semibold flex space-x-2 justify-center items-center"
-        >
-          <img
-            src="https://thumbs.dreamstime.com/b/green-farm-logo-icon-design-can-be-used-as-complement-to-125643927.jpg"
-            alt="app-logo"
-            width="24px"
-            className="h-[24px] active:animate-spin"
-          />
-          {/* Change appName from src/constants/appName.ts */}
-          <span className="hidden sm:inline">{appName}</span>
+      <nav className="fixed h-16 z-50 bg-zinc-100 dark:bg-zinc-900 border-b-2 border-gray-200 dark:border-gray-800 px-32 top-0 left-0 w-full flex justify-between items-center p-4">
+        <Link to="/">
+          <img className="h-14 w-14" src="/Logo.png" alt="logo" />
         </Link>
-        <div className="lg:h-20 h-[4.5rem] lg:py-5 pt-4 pb-[1rem] flex space-x-2 md:w-2/5">
-          <div className="w-full relative hidden md:inline-block">
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search something..."
-              defaultStyling={false}
-              className="bg-zinc-300 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-            />
-            <div className="absolute top-2 right-2 border-1 text-zinc-900 bg-zinc-300 border-zinc-400 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300 w-fit py-1 px-2 text-xs rounded-md">
-              ⌘K
-            </div>
-          </div>
-        </div>
-        <div className="text-zinc-600 dark:text-zinc-400 md:flex justify-center items-center hidden space-x-7 font-semibold">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `${isActive ? "text-zinc-900 dark:text-zinc-100" : "hover:text-zinc-900 dark:hover:text-zinc-100"} cursor-pointer transition-colors`
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="#"
-            className={({ isActive }) =>
-              `${isActive ? "text-zinc-900 dark:text-zinc-100" : "hover:text-zinc-900 dark:hover:text-zinc-100"} cursor-pointer transition-colors`
-            }
-          >
-            Dashboard
-          </NavLink>
-          <div className="hidden lg:inline-block">
-            <ProfileCard />
-          </div>
+        <ul className="flex gap-4">
+          {navLinks.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                `font-semibold ${isActive ? "text-zinc-950 dark:text-zinc-100" : "text-gray-600 dark:text-zinc-500"}`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </ul>
+        <div className="flex gap-4">
+          <ThemeToggler />
+          {(isLoaded && isSignedIn) ? <UserButton /> : (isLoaded ? <Link className="bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-zinc-200 px-3 py-1 rounded-sm transition-colors" to="/auth/signin">Sign in</Link> : <Loader2 className="w-5 h-5 animate-spin" />)}
         </div>
       </nav>
+      <div className="h-16"></div>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

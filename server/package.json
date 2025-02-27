@@ -3,22 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "test": "echo \"Error: no test specified\" && exit 1"
-=======
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-<<<<<<< HEAD
-  "description": ""
-}
-=======
   "type": "commonjs",
   "description": "",
   "dependencies": {
@@ -36,4 +28,3 @@
     "typescript": "^5.7.3"
   }
 }
->>>>>>> aaac6c0b52ce9581a65756c3aed17707be1ce66f
