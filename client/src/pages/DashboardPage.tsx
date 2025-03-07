@@ -1,6 +1,12 @@
+import News from "@/components/general/News"
+
 function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+<>
+
+<News></News>
+
+</>
   )
 }
 
