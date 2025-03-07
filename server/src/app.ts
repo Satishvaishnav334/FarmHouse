@@ -31,7 +31,9 @@ io.on('connection', (socket) => {
 
 // routes
 import healthRouter from "./routes/healthRoute"
+import userRouter from "./routes/userRoute"
 
-app.use("/api/v1/users", healthRouter)
+app.use("/api/v1/health", healthRouter)
+app.use("/api/v1/users", userRouter)
 
 export default app;
