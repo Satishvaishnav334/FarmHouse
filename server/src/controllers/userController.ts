@@ -8,6 +8,11 @@ const createUser = async (req: Request, res: Response) => {
       name,
       email,
       phone,
+      DOB,
+      location,
+      governmentSchemes,
+      landOwnership,
+      farmingExperience,
       xUserKey,
     } = req.body;
 
@@ -30,6 +35,11 @@ const createUser = async (req: Request, res: Response) => {
       name,
       phone,
       email,
+      farmingExperience,
+      landOwnership,
+      governmentSchemes,
+      DOB,
+      location,
       xUserKey,
     });
 
