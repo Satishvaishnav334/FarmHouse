@@ -5,6 +5,8 @@ import { toast } from "@/hooks/use-toast"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import TagInput from "../ui/TagInput"
+import { Loader2 } from "lucide-react"
+import { Separator } from "../ui/separator"
 
 function FarmerDetailsForm() {
 
@@ -64,6 +66,8 @@ function FarmerDetailsForm() {
 
   return (
     <form className="space-y-2 w-full min-w-96" method="post" onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-semibold">Farmer Details</h2>
+      <Separator className="my-2"/>
       <Input className="w-full" type="text" name="name" placeholder="Enter your name" id="name" />
       <Input className="w-full" type="tel" name="phone" placeholder="Enter your phone number" id="phone" />
       <Input className="w-full" type="date" name="dob" placeholder="Enter your Date of Birth" id="dob" />
@@ -75,7 +79,7 @@ function FarmerDetailsForm() {
         <Input className="w-full" type="text" name="District" placeholder="Enter your destrict" id="Destrict" />
       </div>
 
-      <Button type="submit" className="w-full">Submit</Button>
+      <Button type="submit" className="w-full">{isPending ? <Loader2 className="animate-spin" /> : "Submit"}</Button>
     </form>
   )
 }

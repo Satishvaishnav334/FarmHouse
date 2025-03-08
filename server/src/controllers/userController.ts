@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import userModel from "../db/userModel";
 import axios from "axios"
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       name,
@@ -15,25 +15,24 @@ const createUser = async (req: Request, res: Response) => {
       farmingExperience,
     } = req.body;
 
-    // Check for missing or empty fields
-    if (
-      Object.entries(req.body).some(([key, value]) => !value)
-    ) {
-      return res.status(400).json({ error: "All fields are required" });
+    // Validate required fields
+    if (Object.entries(req.body).some(([key, value]) => !value)) {
+      res.status(400).json({ error: "All fields are required" });
+      return;
     }
 
-    // Assign a temporary unique username if not provided
     if (!req.body.username) {
       req.body.username = `user_${Date.now()}`;
     }
 
-    // Check if user already exists
+    // Check if user exists
     const userExists = await userModel.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ error: "User with this email already exists" });
+      res.status(400).json({ error: "User with this email already exists" });
+      return;
     }
 
-    // Create a Botpress user
+    // Call Botpress API
     const botpressResponse = await axios.post(
       `https://chat.botpress.cloud/${process.env.BOTPRESS_WEBHOOK_URL}/users`,
       { id: Date.now().toString() },
@@ -41,10 +40,11 @@ const createUser = async (req: Request, res: Response) => {
     );
 
     if (botpressResponse.status !== 200) {
-      return res.status(400).json({ error: "Failed to register with AI assistant" });
+      res.status(400).json({ error: "Failed to register with AI assistant" });
+      return;
     }
 
-    // Create new user in database
+    // Save user to database
     const newUser = await userModel.create({
       name,
       email,
@@ -54,7 +54,7 @@ const createUser = async (req: Request, res: Response) => {
       governmentSchemes,
       landOwnership,
       farmingExperience,
-      xUserKey: botpressResponse.data.key,
+      xUserKey: botpressResponse.data.key, // Store Botpress key
     });
 
     res.status(201).json({ message: "User created successfully!", data: newUser });
@@ -62,12 +62,14 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
-      if ((error as any).code === 11000) { // Handle MongoDB duplicate key error
-        return res.status(400).json({ error: "User with this email already exists" });
+      if ((error as any).code === 11000) {
+        res.status(400).json({ error: "User with this email already exists" });
+        return;
       }
-      return res.status(500).json({ error: error.message || "Internal server error" });
+      res.status(500).json({ error: error.message || "Internal server error" });
+    } else {
+      res.status(500).json({ error: "Unexpected error occurred" });
     }
-    res.status(500).json({ error: "Unexpected error occurred" });
   }
 };
 
