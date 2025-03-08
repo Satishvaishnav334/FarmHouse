@@ -1,4 +1,4 @@
-const DB_NAME = 'kisan-setu';
-const appName = "Kisan Setu";
+const DB_NAME = 'kisansetu';
+const appName = "KisanSetu";
 
 export { DB_NAME, appName };

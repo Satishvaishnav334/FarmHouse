@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import userModel from "../db/userModel";
+import userModel from "../models/userModel";
 import axios from "axios"
 
 const createUser = async (req: Request, res: Response): Promise<void> => {

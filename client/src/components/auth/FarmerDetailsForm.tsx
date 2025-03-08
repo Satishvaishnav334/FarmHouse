@@ -40,7 +40,12 @@ function FarmerDetailsForm() {
         governmentSchemes: rawData.governmentSchemes
       }
 
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URI}/api/v1/farmer`, customData)
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URI}/api/v1/users`, customData, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": import.meta.env.VITE_SERVER_URI
+        }
+      })
 
       if (res.status === 200) {
         toast({
