@@ -2,11 +2,9 @@ import News from "@/components/general/News"
 
 function DashboardPage() {
   return (
-<>
-
-<News></News>
-
-</>
+    <div>
+      <News />
+    </div>
   )
 }
 

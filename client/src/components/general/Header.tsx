@@ -1,7 +1,14 @@
 import { useAuth, UserButton } from "@clerk/clerk-react"
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import ThemeToggler from "./ThemeToggler"
 import { Loader2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -10,6 +17,7 @@ const navLinks = [
 ];
 
 function Header() {
+  const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth();
 
   return (
@@ -33,7 +41,30 @@ function Header() {
         </ul>
         <div className="flex gap-4">
           <ThemeToggler />
-          {(isLoaded && isSignedIn) ? <UserButton /> : (isLoaded ? <Link className="bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-zinc-200 px-3 py-1 rounded-sm transition-colors" to="/auth/signin">Sign in</Link> : <Loader2 className="w-5 h-5 animate-spin" />)}
+          {(isLoaded && isSignedIn)
+            ? <UserButton />
+            : (isLoaded
+              ?
+              <div className="flex space-x-2">
+                <Link to="/auth/signin" className="border border-zinc-400 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-zinc-200 px-3 py-1 rounded-sm transition-colors cursor-pointer">Log In</Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <span className="block bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-zinc-200 px-3 py-1 rounded-sm transition-colors cursor-pointer">Register</span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => {
+                      navigate("/auth/signup/details")
+                    }}>Farmer</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {
+                      navigate("/auth/signup")
+                    }}>Consumer</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              : <Loader2 className="w-6 h-6 animate-spin" />
+            )
+          }
         </div>
       </nav>
       <div className="h-16"></div>

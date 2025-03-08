@@ -45,7 +45,7 @@ const News: React.FC = () => {
   const currentNews = data[currentIndex];
 
   return (
-    <div className="bg-gray-100 p-6 min-h-screen flex flex-col items-center">
+    <div className="p-6 w-fit mx-auto flex flex-col items-center">
       {currentNews ? (
         <div
           className="relative bg-cover bg-center bg-no-repeat w-80 h-40 rounded-lg shadow-md overflow-hidden flex items-center justify-center text-white"
@@ -78,7 +78,7 @@ const News: React.FC = () => {
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className={`px-4 py-2 bg-gray-300 rounded-md transition-colors ${
+          className={`px-4 py-2 bg-gray-300 text-zinc-900 rounded-md transition-colors ${
             currentIndex === 0
               ? "cursor-not-allowed opacity-50"
               : "hover:bg-gray-400"
@@ -89,7 +89,7 @@ const News: React.FC = () => {
         <button
           onClick={handleNext}
           disabled={currentIndex >= data.length - 1}
-          className={`px-4 py-2 bg-gray-300 rounded-md transition-colors ${
+          className={`px-4 py-2 bg-gray-300 text-zinc-900 rounded-md transition-colors ${
             currentIndex >= data.length - 1
               ? "cursor-not-allowed opacity-50"
               : "hover:bg-gray-400"
