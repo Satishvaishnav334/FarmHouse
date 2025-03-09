@@ -8,34 +8,14 @@ import TagInput from "../ui/TagInput"
 import { Loader2 } from "lucide-react"
 import { useUser } from "@clerk/clerk-react"
 import { Textarea } from "../ui/textarea"
-
-type FarmerDetails = {
-  location: {
-    state: string;
-    district: string;
-  };
-  isFarmer: true,
-  DOB: string;
-  name: string;
-  pinCode: string;
-  address: string;
-  email: string;
-  phone: string;
-  landOwnership: string;
-  farmingExperience: string;
-  governmentSchemes: string[];
-};
-
-type ConsumerDetails = {
-  isFarmer: false,
-  name: string;
-  email: string;
-}
+import { ConsumerDetails, FarmerDetails } from "@/lib/types"
+import useProfileStore from "@/store/profileStore"
 
 function FarmerDetailsForm() {
 
   const navigate = useNavigate()
   const user = useUser().user
+  const { profile } = useProfileStore()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
 
@@ -53,6 +33,7 @@ function FarmerDetailsForm() {
     DOB: "",
     pinCode: "",
     address: "",
+    theme: profile.theme,
     name: user?.fullName || user?.firstName || "",
     email: user?.primaryEmailAddress?.emailAddress || "",
     phone: user?.primaryPhoneNumber?.phoneNumber || "",
@@ -64,6 +45,7 @@ function FarmerDetailsForm() {
   const initialStateForConsumer: ConsumerDetails = {
     name: user?.fullName || user?.firstName || "",
     email: user?.primaryEmailAddress?.emailAddress || "",
+    theme: profile.theme,
     isFarmer: false
   }
 
@@ -114,7 +96,11 @@ function FarmerDetailsForm() {
       }
 
       localStorage.removeItem("role")
-      navigate("/dashboard", { replace: true })
+      if (res.data.data.isFarmer) {
+        navigate("/dashboard/farmer", { replace: true })
+      } else {
+        navigate("/dashboard", { replace: true })
+      }
 
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -125,7 +111,8 @@ function FarmerDetailsForm() {
           variant: "destructive"
         })
         if (errorMsg === "User with this email already exists") {
-          navigate("/dashboard", { replace: true })
+          localStorage.removeItem("role")
+          navigate("/auth/redirect", { replace: true })
         }
       } else {
         toast({

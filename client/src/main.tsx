@@ -8,7 +8,7 @@ import SignInPage from './pages/SignInPage'
 import SignUpPage from './pages/SignUpPage'
 import AuthLayout from './layouts/AuthLayout'
 import AppLayout from './layouts/AppLayout'
-import DashboardPage from './pages/DashboardPage'
+import FarmerDashboardPage from './pages/FarmerDashboardPage'
 import RootLayout from './layouts/RootLayout'
 import InterviewLayout from './layouts/InterviewLayout'
 import React from 'react'
@@ -41,8 +41,12 @@ const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           {
+            path: "farmer",
+            element: <FarmerDashboardPage />,
+          },
+          {
             path: "",
-            element: <DashboardPage />,
+            element: <FarmerDashboardPage />,
           },
         ]
       },

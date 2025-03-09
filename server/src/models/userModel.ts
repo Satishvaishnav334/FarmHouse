@@ -42,6 +42,11 @@ const UserSchema = new mongoose.Schema(
         trim: true,
       },
     },
+    theme: {
+      type : String,
+      enum: ["dark", "light"],
+      default: "light"
+    },
     pinCode: {
       type: Number,
       default: null,

@@ -1,11 +1,14 @@
 import News from "@/components/general/News"
 import { toast } from "@/hooks/use-toast"
+import useProfileStore from "@/store/profileStore"
 import { useUser } from "@clerk/clerk-react"
 import axios, { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function DashboardPage() {
+
+  const { setProfile } = useProfileStore()
 
   const [loading, setLoading] = useState(true)
 
@@ -32,7 +35,15 @@ function DashboardPage() {
           navigate("/auth/signin", { replace: true })
           return
         }
-        // TODO: save res.data somewhere in a state
+
+        const userData = res.data.data
+        if (!userData) {
+          navigate("/auth/redirect", { replace: true })
+          return
+        }
+
+        setProfile(userData)
+
       } catch (error) {
         if (error instanceof AxiosError) {
           const errorMsg = error.response?.data?.error || "Something went wrong"
@@ -70,7 +81,7 @@ function DashboardPage() {
     }
 
     fetchData()
-  }, [navigate, user])
+  }, [navigate, setProfile, user])
 
   if (loading) return (
     <div className="flex fixed h-screen w-screen z-[100] flex-col items-center justify-center text-center">

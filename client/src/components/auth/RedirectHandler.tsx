@@ -34,10 +34,15 @@ function RedirectHandler() {
         }
         toast({
           title: "Success",
-          description: "Farmer logged in successfully",
+          description: "User logged in successfully",
           variant: "default"
         })
-        navigate("/dashboard", { replace: true })
+
+        if(res.data.data.isFarmer){
+          navigate("/dashboard/farmer", { replace: true })
+        } else {
+          navigate("/dashboard", { replace: true })
+        }
 
       } catch (error) {
         if (error instanceof AxiosError) {
