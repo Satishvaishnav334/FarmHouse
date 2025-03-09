@@ -1,29 +1,29 @@
-import News from "@/components/general/News"
 import { toast } from "@/hooks/use-toast"
 import { useUser } from "@clerk/clerk-react"
 import axios, { AxiosError } from "axios"
+import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function DashboardPage() {
+function RedirectHandler() {
 
-  const [loading, setLoading] = useState(true)
+  const [isFetching, setIsFetching] = useState(true)
 
-  const user = useUser().user
   const navigate = useNavigate()
+  const user = useUser().user
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       try {
         if (!user) {
           navigate("/auth/signin")
           return
         }
-        setLoading(true)
+        setIsFetching(true)
 
         const email = user.primaryEmailAddress?.emailAddress
         if (!email) {
-          navigate("/auth/redirect", { replace: true })
+          navigate("/auth/signin", { replace: true })
           return
         }
 
@@ -32,11 +32,16 @@ function DashboardPage() {
           navigate("/auth/signin", { replace: true })
           return
         }
-        // TODO: save res.data somewhere in a state
+        toast({
+          title: "Success",
+          description: "Farmer logged in successfully",
+          variant: "default"
+        })
+        navigate("/dashboard", { replace: true })
+
       } catch (error) {
         if (error instanceof AxiosError) {
-          const errorMsg = error.response?.data?.error || "Something went wrong"
-          if (errorMsg === "User with this email does not exist") {
+          if (error.response?.data?.error === "User with this email does not exist") {
             const role = localStorage.getItem("role")
             if (!role) {
               toast({
@@ -46,43 +51,30 @@ function DashboardPage() {
               return
             }
             navigate(`/auth/signup/details?role=${role}`, { replace: true })
-            return
           } else {
             toast({
               title: "Error",
-              description: errorMsg,
+              description: error.response?.data?.error || "Something went wrong",
               variant: "destructive"
             })
             console.log(error)
           }
         } else {
-          toast({
-            title: "Error",
-            description: "Something went wrong",
-            variant: "destructive"
-          })
           console.log(error)
-          navigate("/auth/redirect", { replace: true })
         }
       } finally {
-        setLoading(false)
+        setIsFetching(false)
       }
     }
-
     fetchData()
-  }, [navigate, user])
-
-  if (loading) return (
-    <div className="flex fixed h-screen w-screen z-[100] flex-col items-center justify-center text-center">
-      <div className="loading-bar h-2 w-full bg-blue-500"></div>
-    </div>
-  )
+  }, [user, navigate])
 
   return (
     <div>
-      <News />
+      <h1 className="text-zinc-900 text-xl">{isFetching ? "Fetching user Details" : "Redirecting"}</h1>
+      <Loader2 className="animate-spin text-2xl mx-auto mt-6" />
     </div>
   )
 }
 
-export default DashboardPage
+export default RedirectHandler

@@ -11,21 +11,89 @@ const UserSchema = new mongoose.Schema(
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
       index: true,
     },
-    DOB: { type: Date, required: true },
-    location: {
-      state: { type: String, required: true, trim: true },
-      district: { type: String, required: true, trim: true },
+    DOB: {
+      type: Date,
+      validate: {
+        validator: function (this: any, val: Date) {
+          return this.isFarmer ? !!val : true;
+        },
+        message: "Date of Birth is required for farmers.",
+      },
     },
-    governmentSchemes: { type: [String], required: true },
-    landOwnership: { type: Number, required: true, min: 0 }, // Acres or hectares
-    farmingExperience: { type: Number, required: true, min: 0 }, // Years
+    location: {
+      state: {
+        type: String,
+        validate: {
+          validator: function (this: any, val: string) {
+            return this.isFarmer ? val.length > 0 : true;
+          },
+          message: "state is required for farmers.",
+        },
+        trim: true,
+      },
+      district: {
+        type: String,
+        validate: {
+          validator: function (this: any, val: string) {
+            return this.isFarmer ? val.length > 0 : true;
+          },
+          message: "district is required for farmers.",
+        },
+        trim: true,
+      },
+    },
+    pinCode: {
+      type: Number,
+      default: null,
+      min: 100000,
+      max: 999999,
+    },
+    isFarmer: { type: Boolean, default: false },
+    address: {
+      type: String,
+      validate: {
+        validator: function (this: any, val: string) {
+          return this.isFarmer ? val.length > 0 : true;
+        },
+        message: "Address is required for farmers.",
+      },
+      default: null,
+      trim: true,
+    },
+    governmentSchemes: {
+      type: [String],
+      validate: {
+        validator: function (this: any, val: string[]) {
+          return this.isFarmer ? val.length > 0 : true;
+        },
+        message: "Government schemes are required for farmers.",
+      },
+    },
+    landOwnership: {
+      type: Number,
+      min: 0,
+      validate: {
+        validator: function (this: any, val: number) {
+          return this.isFarmer ? val > 0 : true;
+        },
+        message: "Land ownership is required for farmers.",
+      },
+    },
+    farmingExperience: {
+      type: Number,
+      default: 0,
+      min: 0,
+      validate: {
+        validator: function (this: any, val: number) {
+          return this.isFarmer ? val > 0 : true;
+        },
+        message: "Farming experience is required for farmers.",
+      },
+    },
     phone: {
       type: String,
-      required: true,
-      unique: true,
       trim: true,
       match: [/^[6-9]\d{9}$/, "Invalid Indian phone number"],
-      index: true,
     },
     xUserKey: {
       type: String,

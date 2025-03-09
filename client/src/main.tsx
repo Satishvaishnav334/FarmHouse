@@ -13,6 +13,8 @@ import RootLayout from './layouts/RootLayout'
 import InterviewLayout from './layouts/InterviewLayout'
 import React from 'react'
 import FarmerDetailsForm from './components/auth/FarmerDetailsForm'
+import RedirectHandler from './components/auth/RedirectHandler'
+import RoleSelector from './components/auth/RoleSelector'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
           {
             path: "signup/details",
             element: <FarmerDetailsForm />,
+          },
+          {
+            path: "signup/roles",
+            element: <RoleSelector />,
+          },
+          {
+            path: "redirect",
+            element: <RedirectHandler />,
           }
         ],
       },
@@ -82,8 +92,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
       afterSignOutUrl="/"
-      signInForceRedirectUrl="/dashboard"
-      signUpForceRedirectUrl="/dashboard"
+      signInForceRedirectUrl="/auth/redirect"
+      signUpForceRedirectUrl="/auth/redirect"
       signInUrl="/auth/signin"
       signUpUrl="/auth/signup"
     >

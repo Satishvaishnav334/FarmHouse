@@ -1,18 +1,7 @@
-import { SignedOut, useAuth } from "@clerk/clerk-react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, Outlet } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 
 function AuthLayout() {
-  const navigate = useNavigate();
-  const { isSignedIn } = useAuth();
-
-  useEffect(() => {
-    if (isSignedIn) {
-      navigate("/dashboard");
-    }
-  }, [isSignedIn, navigate]);
-
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -85,9 +74,7 @@ function AuthLayout() {
                 quibusdam aperiam voluptatum.
               </p>
             </div>
-            <SignedOut>
-              <Outlet />
-            </SignedOut>
+            <Outlet />
           </div>
         </main>
       </div>

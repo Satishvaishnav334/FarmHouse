@@ -54,10 +54,12 @@ function Header() {
                   <DropdownMenuContent>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => {
-                      navigate("/auth/signup/details")
+                      navigate("/auth/signup")
+                      localStorage.setItem("role", "farmer")
                     }}>Farmer</DropdownMenuItem>
                     <DropdownMenuItem onClick={() => {
                       navigate("/auth/signup")
+                      localStorage.setItem("role", "consumer")
                     }}>Consumer</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

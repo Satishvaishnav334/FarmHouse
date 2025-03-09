@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userModel from "../models/userModel";
-import axios from "axios"
+import axios from "axios";
 
 const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -9,6 +9,9 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
       email,
       phone,
       DOB,
+      isFarmer,
+      address,
+      pinCode,
       location,
       governmentSchemes,
       landOwnership,
@@ -16,9 +19,16 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
     } = req.body;
 
     // Validate required fields
-    if (Object.entries(req.body).some(([key, value]) => !value)) {
-      res.status(400).json({ error: "All fields are required" });
-      return;
+    if (isFarmer) {
+      if (Object.entries(req.body).some(([key, value]) => !value)) {
+        res.status(400).json({ error: "All fields are required" });
+        return;
+      }
+    } else {
+      if (!name || !email) {
+        res.status(400).json({ error: "All fields are required" });
+        return;
+      }
     }
 
     if (!req.body.username) {
@@ -36,7 +46,12 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
     const botpressResponse = await axios.post(
       `https://chat.botpress.cloud/${process.env.BOTPRESS_WEBHOOK_URL}/users`,
       { id: Date.now().toString() },
-      { headers: { accept: "application/json", "content-type": "application/json" } }
+      {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+      }
     );
 
     if (botpressResponse.status !== 200) {
@@ -48,17 +63,21 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
     const newUser = await userModel.create({
       name,
       email,
-      phone,
-      DOB,
-      location,
-      governmentSchemes,
-      landOwnership,
-      farmingExperience,
+      phone: phone || "",
+      DOB: DOB || "",
+      isFarmer: isFarmer || false,
+      address: address || "",
+      pinCode: pinCode || null,
+      location: location || { state: "", district: "" },
+      governmentSchemes: governmentSchemes || [],
+      landOwnership: landOwnership || 0,
+      farmingExperience: farmingExperience || 0,
       xUserKey: botpressResponse.data.key, // Store Botpress key
     });
 
-    res.status(201).json({ message: "User created successfully!", data: newUser });
-
+    res
+      .status(201)
+      .json({ message: "User created successfully!", data: newUser });
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
