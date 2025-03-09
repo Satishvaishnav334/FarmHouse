@@ -9,13 +9,11 @@ import { Loader2 } from "lucide-react"
 import { useUser } from "@clerk/clerk-react"
 import { Textarea } from "../ui/textarea"
 import { ConsumerDetails, FarmerDetails } from "@/lib/types"
-import useProfileStore from "@/store/profileStore"
 
 function FarmerDetailsForm() {
 
   const navigate = useNavigate()
   const user = useUser().user
-  const { profile } = useProfileStore()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
 
@@ -33,7 +31,6 @@ function FarmerDetailsForm() {
     DOB: "",
     pinCode: "",
     address: "",
-    theme: profile.theme,
     name: user?.fullName || user?.firstName || "",
     email: user?.primaryEmailAddress?.emailAddress || "",
     phone: user?.primaryPhoneNumber?.phoneNumber || "",
@@ -45,7 +42,6 @@ function FarmerDetailsForm() {
   const initialStateForConsumer: ConsumerDetails = {
     name: user?.fullName || user?.firstName || "",
     email: user?.primaryEmailAddress?.emailAddress || "",
-    theme: profile.theme,
     isFarmer: false
   }
 

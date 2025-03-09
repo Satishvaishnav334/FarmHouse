@@ -1,3 +1,4 @@
+import AssistantElement from "@/components/general/AssistantElement"
 import News from "@/components/general/News"
 import { toast } from "@/hooks/use-toast"
 import useProfileStore from "@/store/profileStore"
@@ -92,6 +93,7 @@ function DashboardPage() {
   return (
     <div>
       <News />
+      <AssistantElement />
     </div>
   )
 }

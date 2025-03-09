@@ -12,7 +12,6 @@ type FarmerDetails = {
   pinCode: string;
   address: string;
   phone: string;
-  theme: themeType;
   landOwnership: string;
   farmingExperience: string;
   email: string;
@@ -24,14 +23,12 @@ type ConsumerDetails = {
   isFarmer: false;
   email: string;
   name: string;
-  theme: themeType;
 };
 
 interface BaseUser {
   _id: string;
   email: string;
   name: string;
-  theme: themeType;
   createdAt: string;
   updatedAt: string;
   _v: number;
