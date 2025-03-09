@@ -25,15 +25,15 @@ function TagInput({ value = [], onChange, ...props }: { value: string[]; onChang
           {...props}
           onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
         />
-        <Button type="button" onClick={addSkill}>
+        <Button type="button" className="text-zinc-100" onClick={addSkill}>
           Add
         </Button>
       </div>
       <div className="flex flex-wrap gap-2">
         {value.map((skill) => (
-          <span key={skill} className="text-black dark:text-white border-[1px] text-sm border-zinc-700 px-2.5 py-1 rounded-md flex items-center">
+          <span key={skill} className="text-black border-[1px] text-sm border-zinc-700 px-2.5 py-1 rounded-md flex items-center">
             {skill}
-            <button type="button" className="ml-2 text-zinc-900 dark:text-zinc-100" onClick={() => removeSkill(skill)}>
+            <button type="button" className="ml-2 text-zinc-900" onClick={() => removeSkill(skill)}>
               ×
             </button>
           </span>
