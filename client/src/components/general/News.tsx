@@ -45,10 +45,10 @@ const News: React.FC = () => {
   const currentNews = data[currentIndex];
 
   return (
-    <div className="p-6 w-fit mx-auto flex flex-col items-center">
+    <div className="p-6 flex flex-col items-center">
       {currentNews ? (
         <div
-          className="relative bg-cover bg-center bg-no-repeat w-80 h-40 rounded-lg shadow-md overflow-hidden flex items-center justify-center text-white"
+          className="relative bg-cover bg-center bg-no-repeat w-80 h-80 rounded-lg shadow-md overflow-hidden flex items-center justify-center text-white"
           style={{
             backgroundImage: `url(${currentNews.urlToImage})`,
           }}
