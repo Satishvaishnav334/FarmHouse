@@ -29,6 +29,7 @@ interface BaseUser {
   _id: string;
   email: string;
   name: string;
+  xUserKey: string;
   createdAt: string;
   updatedAt: string;
   _v: number;

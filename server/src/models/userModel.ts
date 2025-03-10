@@ -99,6 +99,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: null,
       unique: true,
+      index: true,
       trim: true,
       sparse: true, // Allows null values while maintaining uniqueness
     },
