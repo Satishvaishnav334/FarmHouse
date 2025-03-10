@@ -23,8 +23,9 @@ function Header() {
   return (
     <>
       <nav className="fixed h-16 z-50 bg-zinc-100 dark:bg-zinc-900 border-b-2 border-gray-200 dark:border-gray-800 px-32 top-0 left-0 w-full flex justify-between items-center p-4">
+        <div className="flex justify-center items-center gap-6">
         <Link to="/">
-          <img className="h-14 w-14" src="/Logo.png" alt="logo" />
+          <img className="h-14 w-14" src="/logo.webp" alt="logo" />
         </Link>
         <ul className="flex gap-4">
           {navLinks.map(({ to, label }) => (
@@ -32,14 +33,18 @@ function Header() {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `font-semibold ${isActive ? "text-zinc-950 dark:text-zinc-100" : "text-gray-600 dark:text-zinc-500"}`
+                `font-semibold ${isActive ? "text-zinc-950 dark:text-zinc-100" : "text-gray-600 hover:text-green-400"}`
               }
             >
               {label}
             </NavLink>
           ))}
         </ul>
+        </div>
         <div className="flex gap-4">
+        <div>
+          <input className="p-2 bg-transparent border-2 rounded-md" type="search" name="" id="" placeholder="Search crops" />
+        </div>
           <ThemeToggler />
           {(isLoaded && isSignedIn)
             ? <UserButton />
