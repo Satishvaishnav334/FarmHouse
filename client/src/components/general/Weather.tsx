@@ -1,6 +1,6 @@
 import useProfileStore from '@/store/profileStore';
 import axios from 'axios';
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface WeatherData {
   weather: {
@@ -13,7 +13,7 @@ interface WeatherData {
   name: string;
 }
 
-const WeatherComponent: React.FC = () => {
+const WeatherComponent = () => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +22,7 @@ const WeatherComponent: React.FC = () => {
   const { profile } = useProfileStore()
 
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+  console.log(apiKey)
 
   const fetchWeather = useCallback(async (city: string | null) => {
     setLoading(true);
