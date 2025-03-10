@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ChevronRight, Leaf, Sun, Droplets, ShoppingBasket, Phone, Mail, MapPin } from "lucide-react"
 import Container from "@/components/general/Container"
 import CropCards from "@/components/general/CropCards"
+import News from "@/components/general/News"
 
 export default function Home() {
   return (
