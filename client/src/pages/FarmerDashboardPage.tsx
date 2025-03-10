@@ -1,12 +1,12 @@
 import AssistantElement from "@/components/general/AssistantElement"
 import News from "@/components/general/News"
+import Weather from "@/components/general/Weather"
 import { toast } from "@/hooks/use-toast"
 import useProfileStore from "@/store/profileStore"
 import { useUser } from "@clerk/clerk-react"
 import axios, { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 function DashboardPage() {
 
   const { setProfile } = useProfileStore()
@@ -91,9 +91,11 @@ function DashboardPage() {
   )
 
   return (
-    <div>
+    <div className="flex flex-row justify-around">
       <News />
       <AssistantElement />
+      {/* <Weather lat={40.7128} lon={-74.0060}/> */}
+      <Weather />
     </div>
   )
 }
