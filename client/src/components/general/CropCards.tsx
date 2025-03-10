@@ -1,13 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, MapPin } from "lucide-react"
+import { useState, useRef } from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 
-const crops = [
+type Crop = {
+  id: number;
+  name: string;
+  farmer: {
+    name: string;
+    image: string;
+  };
+  price: string;
+  location: string;
+  image: string;
+};
+
+const crops: Crop[] = [
   {
     id: 1,
     name: "Organic Curn",
@@ -23,7 +35,7 @@ const crops = [
     id: 2,
     name: "Paddy Rice",
     farmer: {
-      name: "Satish Kumar",
+      name: "Satish",
       image: "/placeholder.svg?height=40&width=40",
     },
     price: "₹ 30/kg",
@@ -34,7 +46,7 @@ const crops = [
     id: 3,
     name: "Wheat Grain",
     farmer: {
-      name: "Dhavnit Monpara",
+      name: "Dhavnit",
       image: "/placeholder.svg?height=40&width=40",
     },
     price: "₹ 40/kg",
@@ -89,7 +101,7 @@ const crops = [
     id: 2,
     name: "Paddy Rice",
     farmer: {
-      name: "Satish Kumar",
+      name: "Satish",
       image: "/placeholder.svg?height=40&width=40",
     },
     price: "₹ 30/kg",
@@ -100,35 +112,35 @@ const crops = [
     id: 3,
     name: "Wheat Grain",
     farmer: {
-      name: "Dhavnit Monpara",
+      name: "Dhavnit",
       image: "/placeholder.svg?height=40&width=40",
     },
     price: "₹ 40/kg",
     location: "Amritsar, Punjab",
     image: "/wheat_grain.jpg",
   },
-]
+];
 
 export default function CropCards() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const [showLeftButton, setShowLeftButton] = useState(false)
-  const [showRightButton, setShowRightButton] = useState(true)
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showLeftButton, setShowLeftButton] = useState<boolean>(false);
+  const [showRightButton, setShowRightButton] = useState<boolean>(true);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
-      const { current: container } = scrollContainerRef
-      const scrollAmount = direction === "left" ? -container.offsetWidth / 2 : container.offsetWidth / 2
-      container.scrollBy({ left: scrollAmount, behavior: "smooth" })
+      const container = scrollContainerRef.current;
+      const scrollAmount = direction === "left" ? -container.offsetWidth / 2 : container.offsetWidth / 2;
+      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
-  }
+  };
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
-      const { current: container } = scrollContainerRef
-      setShowLeftButton(container.scrollLeft > 0)
-      setShowRightButton(container.scrollLeft < container.scrollWidth - container.clientWidth - 10)
+      const container = scrollContainerRef.current;
+      setShowLeftButton(container.scrollLeft > 0);
+      setShowRightButton(container.scrollLeft < container.scrollWidth - container.clientWidth - 10);
     }
-  }
+  };
 
   return (
     <div className="relative">
@@ -166,8 +178,8 @@ export default function CropCards() {
                 {crop.location}
               </div>
             </CardContent>
-            <CardFooter className="border-t pt-4">
-              <div className="flex items-center w-full">
+            <CardFooter className="border-t pt-4 flex justify-between items-center">
+              <div className="flex items-center">
                 <Avatar className="h-8 w-8 mr-2">
                   <AvatarImage src={crop.farmer.image} alt={crop.farmer.name} />
                   <AvatarFallback>{crop.farmer.name.charAt(0)}</AvatarFallback>
@@ -177,6 +189,7 @@ export default function CropCards() {
                   <p className="text-xs text-muted-foreground">Farmer</p>
                 </div>
               </div>
+              <Button variant={"outline"}>Add to Cart</Button>
             </CardFooter>
           </Card>
         ))}
@@ -184,7 +197,7 @@ export default function CropCards() {
 
       {showRightButton && (
         <Button
-          variant="outline"
+          variant="secondary"
           size="icon"
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background shadow-md"
           onClick={() => scroll("right")}
@@ -192,13 +205,6 @@ export default function CropCards() {
           <ChevronRight className="h-4 w-4" />
         </Button>
       )}
-
-      {/* <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style> */}
     </div>
-  )
+  );
 }
-
