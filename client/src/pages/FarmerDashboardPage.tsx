@@ -1,6 +1,7 @@
 import AssistantElement from "@/components/general/AssistantElement"
 import News from "@/components/general/News"
 import Weather from "@/components/general/Weather"
+import Price from "@/components/general/Price"
 import { toast } from "@/hooks/use-toast"
 import useProfileStore from "@/store/profileStore"
 import { useUser } from "@clerk/clerk-react"
@@ -96,6 +97,7 @@ function DashboardPage() {
       <AssistantElement />
       {/* <Weather lat={40.7128} lon={-74.0060}/> */}
       <Weather />
+      <Price></Price>
     </div>
   )
 }
