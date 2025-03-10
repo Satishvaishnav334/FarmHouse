@@ -37,31 +37,6 @@ export default function Home() {
            <CropCards/>
         </div>
 
-        {/* About Section */}
-        <section id="about" className="py-16 md:py-10 bg-green-100 md:p-10 rounded-md">
-          <div className="container">
-            <div className="grid gap-12 md:grid-cols-2 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6">About Green Acres Farm</h2>
-                <p className="text-muted-foreground mb-4">
-                  For over 35 years, our family has been dedicated to growing the finest organic produce using
-                  sustainable farming practices that protect our land for future generations.
-                </p>
-                <p className="text-muted-foreground mb-6">
-                  We believe in farming that works with nature, not against it. Our commitment to organic methods means
-                  you get the healthiest, most flavorful food possible.
-                </p>
-                <Button className="bg-green-600 hover:bg-green-700">
-                  Our Story <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-              <div className="relative h-[400px] rounded-lg overflow-hidden">
-                <img src="" alt="" />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Features Section */}
         <section className="py-16 md:py-24">
           <div className="container">
@@ -94,6 +69,23 @@ export default function Home() {
                   From our farm to your table - reducing food miles and ensuring maximum freshness.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+ {/* CTA Section */}
+ <section className="py-16 md:py-24 bg-green-600 text-white rounded-md">
+          <div className="container text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to taste the difference?</h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto">
+              Visit our farm store, join our CSA program, or order online for local delivery or pickup.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100">
+                Order Online
+              </Button>
+              <Button size="lg" variant="outline" className="border-white text-white bg-white/20">
+                Visit The Farm
+              </Button>
             </div>
           </div>
         </section>
@@ -141,25 +133,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-green-600 text-white">
-          <div className="container text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to taste the difference?</h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Visit our farm store, join our CSA program, or order online for local delivery or pickup.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100">
-                Order Online
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
-                Visit The Farm
-              </Button>
-            </div>
-          </div>
-        </section>
-
         {/* Contact Section */}
         <section id="contact" className="py-16 md:py-24">
           <div className="container">
