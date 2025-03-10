@@ -91,7 +91,7 @@ function DashboardPage() {
   )
 
   return (
-    <div className="flex flex-row justify-around">
+    <div className="flex flex-col justify-around">
       <News />
       <AssistantElement />
       {/* <Weather lat={40.7128} lon={-74.0060}/> */}

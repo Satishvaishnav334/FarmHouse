@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Leaf, Sun, Droplets, ShoppingBasket, Phone, Mail, MapPin } from "lucide-react"
 import Container from "@/components/general/Container"
+import CropCards from "@/components/general/CropCards"
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
        <main className="flex-1">
         {/* Hero Section */}
         <section className="relative">
-          <div className="relative h-[70vh] w-full overflow-hidden bg-green-400 p-6 rounded-lg">
+          <div className="relative h-[60vh] w-full overflow-hidden bg-green-300 p-6 rounded-lg">
             {/* <img src="" alt="" /> */}
             <div className="absolute inset-0" />
             <div className="container relative z-10 flex h-full flex-col items-start justify-center gap-4 text-gray-800">
@@ -18,13 +19,13 @@ export default function Home() {
                 Fresh From Our Fields To Your Table
               </h1>
               <p className="max-w-2xl text-lg md:text-xl">
-                Family-owned farm providing organic, sustainably grown produce and farm products since 1985.
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero cupiditate ex quo ratione ducimus quam ut necessitatibus impedi
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button size="lg" className="bg-green-600 hover:bg-green-700">
                   Shop Our Products
                 </Button>
-                <Button size="lg" variant="outline" className="border-[#303030] text-gray-800  hover:bg-white/20">
+                <Button size="lg" variant="outline" className="border-[#303030] text-gray-800 bg-white/20">
                   Visit The Farm
                 </Button>
               </div>
@@ -32,8 +33,12 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="mt-5">
+           <CropCards/>
+        </div>
+
         {/* About Section */}
-        <section id="about" className="py-16 md:py-24 bg-green-50">
+        <section id="about" className="py-16 md:py-10 bg-green-100 md:p-10 rounded-md">
           <div className="container">
             <div className="grid gap-12 md:grid-cols-2 items-center">
               <div>
@@ -89,48 +94,6 @@ export default function Home() {
                   From our farm to your table - reducing food miles and ensuring maximum freshness.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Products Section */}
-        <section id="products" className="py-16 md:py-24 bg-green-50">
-          <div className="container">
-            <div className="flex flex-col items-center text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Our Seasonal Products</h2>
-              <p className="text-muted-foreground max-w-2xl">
-                We grow a variety of seasonal fruits and vegetables, raise free-range chickens for eggs, and produce
-                artisanal goods from our farm.
-              </p>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { name: "Fresh Vegetables", image: "/placeholder.svg?height=400&width=400" },
-                { name: "Organic Fruits", image: "/placeholder.svg?height=400&width=400" },
-                { name: "Farm Fresh Eggs", image: "/placeholder.svg?height=400&width=400" },
-                { name: "Homemade Preserves", image: "/placeholder.svg?height=400&width=400" },
-              ].map((product, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-lg border bg-background">
-                  <div className="aspect-square overflow-hidden">
-                    <img src="" alt="" />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-medium">{product.name}</h3>
-                    <div className="mt-2 flex items-center justify-between">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full border-green-600 text-green-600 hover:bg-green-50"
-                      >
-                        <ShoppingBasket className="mr-2 h-4 w-4" /> View Products
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-12 text-center">
-              <Button className="bg-green-600 hover:bg-green-700">View All Products</Button>
             </div>
           </div>
         </section>
