@@ -56,8 +56,7 @@ const WeatherComponent = () => {
 
   useEffect(() => {
     fetchWeather(profile.isFarmer ? profile.location.district : null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchWeather, profile]);
 
   const handleSearch = () => {
     if (city.trim()) {
