@@ -19,7 +19,7 @@ function Header() {
   const navigate = useNavigate()
   const { setProfile, profile } = useProfileStore()
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isSignedIn ? true : false)
 
   useEffect(() => {
     if(!user || !isLoaded) return
