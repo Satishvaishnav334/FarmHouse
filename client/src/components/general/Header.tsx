@@ -38,7 +38,7 @@ function Header() {
           return
         }
 
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}/api/v1/users/${email}`)
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}/api/v1/users/get/${email}`)
         if (res.status !== 201) {
           navigate("/auth/signin", { replace: true })
           return

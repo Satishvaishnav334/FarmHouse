@@ -6,7 +6,7 @@ import {
 
 const router = Router()
 
-router.route('/').post(createUser)
-router.route('/:email').get(getUser)
+router.route('/create').post(createUser)
+router.route('/get/:email').get(getUser)
 
 export default router;

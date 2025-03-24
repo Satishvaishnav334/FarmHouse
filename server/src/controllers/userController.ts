@@ -108,7 +108,6 @@ const getUser = async (req: Request, res: Response) => {
       return;
     }
 
-    await newEntry.save();
     res
       .status(201)
       .json({ message: "Form fetched successfully!", data: newEntry || "" });

@@ -75,7 +75,7 @@ function FarmerDetailsForm() {
         }
       }
 
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URI}/api/v1/users`, parsedUserDetails, {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URI}/api/v1/users/create`, parsedUserDetails, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": import.meta.env.VITE_SERVER_URI
