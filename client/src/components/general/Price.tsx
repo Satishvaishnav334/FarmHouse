@@ -31,7 +31,7 @@ const CropPrices: React.FC = () => {
         if (response.data.records && response.data.records.length > 0) {
           setCropData(response.data.records);
         } else {
-          alert('No data found for the search. Showing default data.');
+          // alert('No data found for the search. Showing default data.');
           fetchData('Ahmedabad', '');
         }
         setLoading(false);
@@ -40,8 +40,9 @@ const CropPrices: React.FC = () => {
         console.error('Error fetching crop data:', error);
         setLoading(false);
       });
-  };
-
+    };
+    
+    console.log(cropData)
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     const searchCity = city.trim() || 'Ahmedabad';

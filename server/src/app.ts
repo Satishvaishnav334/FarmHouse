@@ -6,6 +6,7 @@ import http from 'http';
 
 const app = express();
 const server = http.createServer(app);
+app.use(cors())
 const io = new Server(server, {
   cors: {
     origin: process.env.ACCESS_CONTROL_ORIGIN || "http://localhost:5173",

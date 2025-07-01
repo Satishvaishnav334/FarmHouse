@@ -17,7 +17,7 @@ const WeatherComponent = () => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [city, setCity] = useState<string>('');
+  const [city, setCity] = useState<string>("Ahmedabad");
 
   const { profile } = useProfileStore()
 
@@ -63,7 +63,7 @@ const WeatherComponent = () => {
   const handleSearch = () => {
     if (city.trim()) {
       fetchWeather(city);
-      setCity('');
+      setCity("Ahmedabad");
     }
   };
 
