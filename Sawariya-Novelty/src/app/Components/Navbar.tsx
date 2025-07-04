@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <motion.div whileHover={{ scale: 1.05 }} className="flex gap-5">
-            <Image src={logo} height={35} alt="logo" className="rounded-xl"></Image>
+            <Image src={logo} height={35} alt="logo" className="rounded-lg"></Image>
           <Link href="/" className="text-2xl font-bold text-gray-800">
             Sawariya Novelty
           </Link>
