@@ -13,8 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sawariya Novelty",
-  description: "By Vikram Vaishnav",
+  title: "Sawariya Novelty - Premium Cosmetics & Novelty Items",
+  description: "Your trusted destination for authentic cosmetics, beauty products, and unique novelty items. Shop the latest trends in makeup, skincare, and fun accessories at unbeatable prices.",
+  keywords: "cosmetics, makeup, skincare, novelty items, beauty products, lipstick, foundation, accessories",
+  openGraph: {
+    title: "Sawariya Novelty - Premium Cosmetics & Novelty Items",
+    description: "Discover premium cosmetics and unique novelty items at unbeatable prices",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
