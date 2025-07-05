@@ -9,26 +9,26 @@ const contactInfo = [
     icon: FiMail,
     title: "Email Us",
     details: "support@sawariyanovelty.com",
-    subDetails: "We'll respond within 24 hours"
+    subDetails: "We&apos;ll respond within 24 hours",
   },
   {
     icon: FiPhone,
     title: "Call Us",
     details: "+91 98765 43210",
-    subDetails: "Mon-Fri 9:00 AM - 6:00 PM"
+    subDetails: "Mon-Fri 9:00 AM - 6:00 PM",
   },
   {
     icon: FiMapPin,
     title: "Visit Us",
     details: "123 Beauty Street, Fashion District",
-    subDetails: "Mumbai, Maharashtra 400001"
+    subDetails: "Mumbai, Maharashtra 400001",
   },
   {
     icon: FiClock,
     title: "Business Hours",
     details: "Monday - Friday: 9:00 AM - 6:00 PM",
-    subDetails: "Saturday: 10:00 AM - 4:00 PM"
-  }
+    subDetails: "Saturday: 10:00 AM - 4:00 PM",
+  },
 ];
 
 export default function Contact() {
@@ -36,28 +36,30 @@ export default function Contact() {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
     console.log("Form submitted:", formData);
-    // Reset form
     setFormData({
       name: "",
       email: "",
       subject: "",
-      message: ""
+      message: "",
     });
-    alert("Thank you for your message! We'll get back to you soon.");
+    alert("Thank you for your message! We’ll get back to you soon.");
   };
 
   return (
@@ -65,7 +67,7 @@ export default function Contact() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -73,14 +75,14 @@ export default function Contact() {
           >
             Contact Us
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl mb-8 max-w-2xl mx-auto"
           >
-            We'd love to hear from you! Get in touch with us for any questions, 
-            concerns, or just to say hello.
+            We&rsquo;d love to hear from you! Get in touch with us for any
+            questions, concerns, or just to say hello.
           </motion.p>
         </div>
       </section>
@@ -98,7 +100,9 @@ export default function Contact() {
                 className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-lg transition-shadow"
               >
                 <info.icon className="w-12 h-12 mx-auto text-purple-600 mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{info.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {info.title}
+                </h3>
                 <p className="text-gray-700 font-medium mb-1">{info.details}</p>
                 <p className="text-gray-500 text-sm">{info.subDetails}</p>
               </motion.div>
@@ -118,11 +122,16 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               className="bg-white rounded-lg shadow-lg p-8"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Send us a Message
+              </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Full Name *
                     </label>
                     <input
@@ -137,7 +146,10 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Email Address *
                     </label>
                     <input
@@ -154,7 +166,10 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Subject *
                   </label>
                   <select
@@ -176,7 +191,10 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Message *
                   </label>
                   <textarea
@@ -214,10 +232,12 @@ export default function Contact() {
                   <span className="text-gray-600 text-lg">Interactive Map</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Visit Our Store</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Visit Our Store
+                  </h3>
                   <p className="text-gray-600 mb-4">
-                    Come visit our physical store to see our products in person and get expert advice 
-                    from our beauty consultants.
+                    Come visit our physical store to see our products in person
+                    and get expert advice from our beauty consultants.
                   </p>
                   <div className="flex items-center text-gray-600">
                     <FiMapPin className="w-5 h-5 mr-2" />
@@ -228,19 +248,36 @@ export default function Contact() {
 
               {/* FAQ Section */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Answers</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  Quick Answers
+                </h3>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-1">What are your shipping times?</h4>
-                    <p className="text-gray-600 text-sm">We typically ship within 1-2 business days, with delivery in 3-7 days.</p>
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      What are your shipping times?
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      We typically ship within 1-2 business days, with delivery
+                      in 3-7 days.
+                    </p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-1">Do you offer returns?</h4>
-                    <p className="text-gray-600 text-sm">Yes, we offer 30-day returns on unopened products in original packaging.</p>
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      Do you offer returns?
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Yes, we offer 30-day returns on unopened products in
+                      original packaging.
+                    </p>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-1">Are your products authentic?</h4>
-                    <p className="text-gray-600 text-sm">Absolutely! We guarantee 100% authentic products from authorized distributors.</p>
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      Are your products authentic?
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Absolutely! We guarantee 100% authentic products from
+                      authorized distributors.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -258,7 +295,9 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl font-bold mb-4">Need Immediate Help?</h2>
-            <p className="text-xl mb-8">Our customer support team is standing by to assist you</p>
+            <p className="text-xl mb-8">
+              Our customer support team is standing by to assist you
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="tel:+919876543210"
