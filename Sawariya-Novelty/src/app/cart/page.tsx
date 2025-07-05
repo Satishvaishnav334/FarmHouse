@@ -90,7 +90,7 @@ export default function Cart() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
             <FiShoppingBag className="w-24 h-24 mx-auto text-gray-400 mb-6" />
             <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h1>
-            <p className="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet.</p>
+            <p className="text-gray-600 mb-8">Looks like you haven&apos;t added any items to your cart yet.</p>
             <Link
               href="/shop"
               className="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700 transition-colors inline-flex items-center gap-2"
