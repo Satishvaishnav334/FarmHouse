@@ -4,8 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import logo from '../favicon.ico'
+// import logo from '../favicon.ico'
+// Note: favicon.ico should be in the public folder, not in the app folder
+// For now, we'll use a placeholder or create a proper logo component
 const navItems = ["Home", "Shop", "About", "Contact"];
 
 const Navbar: React.FC = () => {
@@ -16,7 +17,6 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <motion.div whileHover={{ scale: 1.05 }} className="flex gap-5">
-            <Image src={logo} height={35} alt="logo" className="rounded-lg"></Image>
           <Link href="/" className="text-2xl font-bold text-gray-800">
             Sawariya Novelty
           </Link>
