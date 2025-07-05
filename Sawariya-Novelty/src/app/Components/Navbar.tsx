@@ -2,15 +2,20 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-// import logo from '../favicon.ico'
-// Note: favicon.ico should be in the public folder, not in the app folder
-// For now, we'll use a placeholder or create a proper logo component
-const navItems = ["Home", "Shop", "About", "Contact"];
+
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" }
+];
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
@@ -24,24 +29,33 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-8">
-          {navItems.map((item) => (
-            <motion.div
-              key={item}
-              whileHover={{ y: -2 }}
-              className="relative group"
-            >
-              <Link
-                href={`/${item.toLowerCase()}`}
-                className="text-gray-700 font-medium hover:text-indigo-600 transition-colors"
-              >
-                {item}
-              </Link>
+          {navItems.map((item, index) => {
+            const isActive = pathname === item.href;
+            return (
               <motion.div
-                className="h-[2px] bg-indigo-600 absolute left-0 bottom-[-4px] w-0 group-hover:w-full transition-all duration-300"
-                layout
-              />
-            </motion.div>
-          ))}
+                key={index}
+                whileHover={{ y: -2 }}
+                className="relative group"
+              >
+                <Link
+                  href={item.href}
+                  className={`font-medium transition-colors ${
+                    isActive
+                      ? "text-indigo-600"
+                      : "text-gray-700 hover:text-indigo-600"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+                <motion.div
+                  className={`h-[2px] absolute left-0 bottom-[-4px] transition-all duration-300 ${
+                    isActive ? "bg-indigo-600 w-full" : "bg-indigo-600 w-0 group-hover:w-full"
+                  }`}
+                  layout
+                />
+              </motion.div>
+            );
+          })}
         </nav>
 
         {/* Icons + Mobile Toggle */}
@@ -77,17 +91,24 @@ const Navbar: React.FC = () => {
             className="md:hidden bg-white shadow-md"
           >
             <ul className="flex flex-col space-y-4 py-4 px-6">
-              {navItems.map((item) => (
-                <li key={item}>
-                  <Link
-                    href={`/${item.toLowerCase()}`}
-                    onClick={() => setIsOpen(false)}
-                    className="block text-gray-700 font-medium hover:text-indigo-600"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              {navItems.map((item, index) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={index}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block font-medium transition-colors ${
+                        isActive
+                          ? "text-indigo-600"
+                          : "text-gray-700 hover:text-indigo-600"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </motion.nav>
         )}
