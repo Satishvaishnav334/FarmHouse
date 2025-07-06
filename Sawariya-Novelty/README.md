@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sawariya Novelty - E-commerce Store
+
+A modern e-commerce platform for cosmetics and novelty items built with Next.js 15, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **User Authentication**: Secure login system with NextAuth.js
+- **Admin Panel**: Full product management system for administrators
+- **Product Management**: CRUD operations for products
+- **Modern UI**: Beautiful, responsive design with Framer Motion animations
+- **Vercel Optimized**: Built specifically for Vercel deployment
+
+## Demo Credentials
+
+### Admin Access
+- Email: `admin@sawariya.com`
+- Password: `password`
+
+### Regular User
+- Email: `user@sawariya.com`
+- Password: `password`
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Set up environment variables**
+   Create a `.env.local` file in the root directory:
+   ```bash
+   NEXTAUTH_SECRET=your-secret-key-here
+   NEXTAUTH_URL=http://localhost:3000
+   MONGODB_URI=your-mongodb-connection-string
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Initialize the database** (Optional - will auto-seed on first run)
+   ```bash
+   npm run init-db
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. **Open your browser**
+   Visit [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+## Deployment on Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Deploy to Vercel**
+   - Connect your GitHub repository to Vercel
+   - Add environment variables in Vercel dashboard:
+     - `NEXTAUTH_SECRET`: Generate a secure random string
+     - `NEXTAUTH_URL`: Your production URL (e.g., https://your-app.vercel.app)
+     - `MONGODB_URI`: Your MongoDB Atlas connection string
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Deploy**
+   Vercel will automatically deploy your application.
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: MongoDB with Mongoose
+- **Authentication**: NextAuth.js
+- **Icons**: React Icons (Feather)
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Admin Features
+
+- Dashboard with statistics
+- Product management (Add, Edit, Delete)
+- User role-based access control
+- Responsive admin interface
+
+## Notes
+
+- This application uses MongoDB Atlas for data storage
+- The database is automatically seeded with demo data on first run
+- The demo credentials are for testing purposes only
+- For production, ensure proper security measures for your MongoDB instance

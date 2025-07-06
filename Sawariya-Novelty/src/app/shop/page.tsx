@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FiFilter,
@@ -10,8 +10,25 @@ import {
   FiShoppingCart,
   FiStar,
 } from "react-icons/fi";
+import { useCart } from "../Components/CartContext";
 
-const products = [
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  originalPrice: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: number;
+  badge: string;
+  inStock: boolean;
+  stock?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+const fallbackProducts = [
   {
     id: 1,
     name: "Luxury Lipstick Collection",
@@ -105,11 +122,44 @@ const products = [
 const categories = ["all", "cosmetics", "novelty", "skincare", "accessories"];
 
 export default function Shop() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   const [showFilters, setShowFilters] = useState(false);
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          setProducts(fallbackProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setProducts(fallbackProducts);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleAddToCart = (product: Product) => {
+    addItem({
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
+  };
 
   const filteredProducts = products
     .filter((product) => {
@@ -129,11 +179,22 @@ export default function Shop() {
         case "rating":
           return b.rating - a.rating;
         case "newest":
-          return b.id - a.id;
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         default:
           return 0;
       }
     });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
@@ -249,7 +310,7 @@ export default function Shop() {
             >
               {filteredProducts.map((product, index) => (
                 <motion.div
-                  key={product.id}
+                  key={product._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -294,7 +355,10 @@ export default function Shop() {
                           ₹{product.originalPrice}
                         </span>
                       </div>
-                      <button className="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 transition-colors">
+                      <button 
+                        onClick={() => handleAddToCart(product)}
+                        className="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 transition-colors"
+                      >
                         <FiShoppingCart className="w-4 h-4" />
                       </button>
                     </div>

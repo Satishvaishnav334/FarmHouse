@@ -1,61 +1,87 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiUser, FiPackage, FiHeart, FiSettings, FiLogOut, FiEdit, FiSave, FiX } from "react-icons/fi";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const orderHistory = [
-  {
-    id: "ORD-001",
-    date: "2024-01-15",
-    status: "Delivered",
-    total: 899,
-    items: 3
-  },
-  {
-    id: "ORD-002",
-    date: "2024-01-10",
-    status: "Shipped",
-    total: 599,
-    items: 2
-  },
-  {
-    id: "ORD-003",
-    date: "2024-01-05",
-    status: "Processing",
-    total: 299,
-    items: 1
-  }
-];
-
-const wishlistItems = [
-  {
-    id: 1,
-    name: "Premium Foundation",
-    price: 699,
-    originalPrice: 899,
-    image: "/api/placeholder/100/100"
-  },
-  {
-    id: 2,
-    name: "Sparkle Earrings",
-    price: 399,
-    originalPrice: 599,
-    image: "/api/placeholder/100/100"
-  }
-];
 
 export default function Account() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  
   const [userInfo, setUserInfo] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+91 98765 43210",
-    address: "123 Main Street, Mumbai, Maharashtra 400001"
+    name: "",
+    email: "",
+    phone: "",
+    address: {
+      street: "",
+      city: "",
+      state: "",
+      pinCode: ""
+    }
   });
 
   const [editedInfo, setEditedInfo] = useState(userInfo);
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/auth/login');
+    }
+  }, [status, router]);
+
+  // Fetch user profile and orders
+  useEffect(() => {
+    const fetchData = async () => {
+      if (session?.user) {
+        try {
+          // Fetch profile
+          const profileResponse = await fetch('/api/profile');
+          if (profileResponse.ok) {
+            const profile = await profileResponse.json();
+            setUserProfile(profile);
+            
+            const profileData = {
+              name: profile.name || '',
+              email: profile.email || '',
+              phone: profile.phone || '',
+              address: {
+                street: profile.address?.street || '',
+                city: profile.address?.city || '',
+                state: profile.address?.state || '',
+                pinCode: profile.address?.pinCode || ''
+              }
+            };
+            
+            setUserInfo(profileData);
+            setEditedInfo(profileData);
+          }
+          
+          // Fetch orders
+          const ordersResponse = await fetch('/api/orders');
+          if (ordersResponse.ok) {
+            const ordersData = await ordersResponse.json();
+            setOrders(ordersData);
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+  }, [session]);
 
   const tabs = [
     { id: "profile", label: "Profile", icon: FiUser },
@@ -64,9 +90,33 @@ export default function Account() {
     { id: "settings", label: "Settings", icon: FiSettings }
   ];
 
-  const handleSave = () => {
-    setUserInfo(editedInfo);
-    setIsEditing(false);
+  const handleSave = async () => {
+    setIsUpdating(true);
+    try {
+      const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedInfo),
+      });
+      
+      if (response.ok) {
+        const updatedProfile = await response.json();
+        setUserProfile(updatedProfile);
+        setUserInfo(editedInfo);
+        setIsEditing(false);
+        alert('Profile updated successfully!');
+      } else {
+        const error = await response.json();
+        alert(error.error || 'Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile');
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   const handleCancel = () => {
@@ -75,17 +125,39 @@ export default function Account() {
   };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Delivered":
+    switch (status.toLowerCase()) {
+      case 'delivered':
         return "bg-green-100 text-green-800";
-      case "Shipped":
+      case 'shipped':
         return "bg-blue-100 text-blue-800";
-      case "Processing":
+      case 'processing':
         return "bg-yellow-100 text-yellow-800";
+      case 'confirmed':
+        return "bg-purple-100 text-purple-800";
+      case 'pending':
+        return "bg-orange-100 text-orange-800";
+      case 'cancelled':
+        return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
+  
+  const handleSignOut = () => {
+    signOut({ callbackUrl: '/' });
+  };
+  
+  if (status === 'loading' || loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+  
+  if (!session) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
@@ -123,7 +195,10 @@ export default function Account() {
                     {tab.label}
                   </button>
                 ))}
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-red-600 hover:bg-red-50 transition-colors">
+                <button 
+                  onClick={handleSignOut}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-red-600 hover:bg-red-50 transition-colors"
+                >
                   <FiLogOut className="w-5 h-5" />
                   Logout
                 </button>
@@ -181,6 +256,7 @@ export default function Account() {
                           value={editedInfo.name}
                           onChange={(e) => setEditedInfo({ ...editedInfo, name: e.target.value })}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          disabled={isUpdating}
                         />
                       ) : (
                         <p className="text-gray-900 py-3">{userInfo.name}</p>

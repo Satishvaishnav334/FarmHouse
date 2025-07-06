@@ -1,10 +1,25 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FiShoppingCart, FiStar, FiTruck, FiShield, FiHeadphones } from "react-icons/fi";
+import { useCart } from "./Components/CartContext";
 
-const featuredProducts = [
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  originalPrice: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: number;
+  badge: string;
+  inStock: boolean;
+}
+
+const fallbackProducts = [
   {
     id: 1,
     name: "Luxury Lipstick Collection",
@@ -61,6 +76,41 @@ const features = [
 ];
 
 export default function Home() {
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const products = await response.json();
+          // Get first 4 products as featured
+          setFeaturedProducts(products.slice(0, 4));
+        } else {
+          setFeaturedProducts(fallbackProducts.slice(0, 4));
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setFeaturedProducts(fallbackProducts.slice(0, 4));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleAddToCart = (product: Product) => {
+    addItem({
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       {/* Hero Section */}
@@ -147,14 +197,26 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
+            {loading ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                  <div className="h-48 bg-gray-200"></div>
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              featuredProducts.map((product, index) => (
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                >
                 <div className="relative">
                   <div className="h-48 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
                     <span className="text-gray-500">Product Image</span>
@@ -176,13 +238,17 @@ export default function Home() {
                       <span className="text-lg font-bold text-purple-600">₹{product.price}</span>
                       <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                     </div>
-                    <button className="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 transition-colors">
+                    <button 
+                      onClick={() => handleAddToCart(product)}
+                      className="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 transition-colors"
+                    >
                       <FiShoppingCart className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               </motion.div>
-            ))}
+              ))
+            )}
           </div>
           <div className="text-center mt-12">
             <Link href="/shop" className="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700 transition-colors">
