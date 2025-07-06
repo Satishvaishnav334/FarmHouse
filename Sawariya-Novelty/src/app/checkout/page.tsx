@@ -86,6 +86,7 @@ export default function Checkout() {
   const finalAmount = cart.totalAmount + deliveryFee;
 
   const handleInputChange = (field: string, value: string) => {
+    console.log("first")
     if (field.startsWith('address.')) {
       const addressField = field.split('.')[1];
       setCustomerInfo(prev => ({
