@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { FiCheckCircle, FiXCircle, FiEdit, FiPlus, FiTrash2, FiX } from 'react-icons/fi';
 
@@ -31,6 +32,7 @@ interface ProductForm {
 }
 
 export default function ManageProducts() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -92,7 +94,7 @@ export default function ManageProducts() {
     try {
       const url = '/api/products';
       const method = editingProduct ? 'PUT' : 'POST';
-      const body = editingProduct 
+      const body = editingProduct
         ? { ...formData, _id: editingProduct._id }
         : formData;
 
@@ -169,16 +171,25 @@ export default function ManageProducts() {
 
   return (
     <>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-6 ">
+        <div className="flex items-end justify-between">
           <h1 className="text-3xl font-bold text-gray-900">Manage Products</h1>
-          <button
-            onClick={() => openModal()}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center space-x-2"
-          >
-            <FiPlus className="h-4 w-4" />
-            <span>Add Product</span>
-          </button>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => openModal()}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-colors flex items-center space-x-2"
+            >
+              <FiPlus className="h-4 w-4" />
+              <span>Quick Add</span>
+            </button>
+            <button
+              onClick={() => router.push('/admin/products/add')}
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center space-x-2"
+            >
+              <FiPlus className="h-4 w-4" />
+              <span>Add Product</span>
+            </button>
+          </div>
         </div>
 
         {products.length === 0 ? (
@@ -209,11 +220,11 @@ export default function ManageProducts() {
                     <span>{product.inStock ? "In Stock" : "Out of Stock"}</span>
                   </div>
                 </div>
-                
+
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                   {product.description}
                 </p>
-                
+
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
                     <span className="text-lg font-bold text-purple-600">
@@ -225,7 +236,7 @@ export default function ManageProducts() {
                       </span>
                     )}
                   </div>
-                  
+
                   {product.badge && (
                     <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
                       {product.badge}
@@ -237,7 +248,7 @@ export default function ManageProducts() {
                   <span className="text-xs text-gray-500 capitalize">
                     {product.category}
                   </span>
-                  
+
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => openModal(product)}

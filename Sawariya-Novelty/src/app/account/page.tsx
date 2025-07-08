@@ -10,14 +10,14 @@ import { useRouter } from "next/navigation";
 export default function Account() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  
+
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [userProfile, setUserProfile] = useState<any>(null);
-  const [orders, setOrders] = useState<any[]>([]);
+  // const [userProfile, setUserProfile] = useState<any>(null);
+  // const [orders, setOrders] = useState<any[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
-  
+
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -49,7 +49,7 @@ export default function Account() {
           if (profileResponse.ok) {
             const profile = await profileResponse.json();
             setUserProfile(profile);
-            
+
             const profileData = {
               name: profile.name || '',
               email: profile.email || '',
@@ -61,11 +61,11 @@ export default function Account() {
                 pinCode: profile.address?.pinCode || ''
               }
             };
-            
+
             setUserInfo(profileData);
             setEditedInfo(profileData);
           }
-          
+
           // Fetch orders
           const ordersResponse = await fetch('/api/orders');
           if (ordersResponse.ok) {
@@ -100,7 +100,7 @@ export default function Account() {
         },
         body: JSON.stringify(editedInfo),
       });
-      
+
       if (response.ok) {
         const updatedProfile = await response.json();
         setUserProfile(updatedProfile);
@@ -142,11 +142,11 @@ export default function Account() {
         return "bg-gray-100 text-gray-800";
     }
   };
-  
+
   const handleSignOut = () => {
     signOut({ callbackUrl: '/' });
   };
-  
+
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
@@ -154,7 +154,7 @@ export default function Account() {
       </div>
     );
   }
-  
+
   if (!session) {
     return null;
   }
@@ -195,7 +195,7 @@ export default function Account() {
                     {tab.label}
                   </button>
                 ))}
-                <button 
+                <button
                   onClick={handleSignOut}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-red-600 hover:bg-red-50 transition-colors"
                 >

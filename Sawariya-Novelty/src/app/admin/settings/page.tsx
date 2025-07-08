@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiSettings, FiSave, FiMail, FiPhone, FiGlobe } from 'react-icons/fi';
+import { FiSettings, FiSave, FiMail,  FiGlobe } from 'react-icons/fi';
 
 export default function AdminSettings() {
   const [settings, setSettings] = useState({

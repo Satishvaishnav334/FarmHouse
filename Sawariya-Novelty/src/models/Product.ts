@@ -26,10 +26,29 @@ const ProductSchema = new mongoose.Schema({
     required: [true, 'Category is required'],
     enum: ['cosmetics', 'novelty', 'skincare', 'accessories'],
   },
+  images: {
+    type: [String],
+    validate: [
+      {
+        validator: function(arr) {
+          return arr.length >= 1 && arr.length <= 5;
+        },
+        message: '1-5 images required'
+      },
+      {
+        validator: function(arr) {
+          const urlRegex = /^(https?:\/\/|\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+          return arr.every(url => urlRegex.test(url));
+        },
+        message: 'All images must be valid URLs'
+      }
+    ],
+    default: ['/api/placeholder/300/300'],
+  },
   image: {
     type: String,
     default: '/api/placeholder/300/300',
-  },
+  }, // keep for backward compatibility
   rating: {
     type: Number,
     default: 0,

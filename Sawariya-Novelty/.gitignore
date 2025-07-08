@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+# trace files
+.next/trace
+trace
+
 # production
 /build
 

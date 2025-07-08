@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiPackage, FiEye, FiEdit, FiTruck, FiPhone, FiMapPin, FiUser, FiCheck, FiX } from 'react-icons/fi';
+import { FiPackage, FiEye, FiEdit, FiTruck, FiPhone, FiCheck, FiX } from 'react-icons/fi';
 
 interface Order {
   _id: string;
@@ -76,7 +76,7 @@ export default function AdminOrders() {
     fetchOrders();
   }, []);
 
-  const filteredOrders = orders.filter(order => 
+  const filteredOrders = orders.filter(order =>
     selectedStatus === 'all' || order.orderStatus === selectedStatus
   );
 
@@ -92,9 +92,9 @@ export default function AdminOrders() {
           orderStatus: newStatus,
         }),
       });
-      
+
       if (response.ok) {
-        setOrders(orders.map(order => 
+        setOrders(orders.map(order =>
           order._id === orderId ? { ...order, orderStatus: newStatus } : order
         ));
       }

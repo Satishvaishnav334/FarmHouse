@@ -37,7 +37,8 @@ export default function RootLayout({
       >
         <SessionProvider>
           <CartProvider>
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
+
             {children}
           </CartProvider>
         </SessionProvider>

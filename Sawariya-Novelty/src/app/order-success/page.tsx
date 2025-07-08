@@ -45,7 +45,7 @@ export default function OrderSuccess() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-gray-600 mb-6"
           >
-            Thank you for your order. We've received your order and will process it soon.
+            Thank you for your order. We ve received your order and will process it soon.
           </motion.p>
 
           {/* Order Number */}
@@ -101,11 +101,11 @@ export default function OrderSuccess() {
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start">
                 <span className="w-2 h-2 bg-purple-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                <span>We'll confirm your order and prepare it for delivery</span>
+                <span>We ll confirm your order and prepare it for delivery</span>
               </li>
               <li className="flex items-start">
                 <span className="w-2 h-2 bg-purple-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                <span>You'll receive SMS/Email updates about your order status</span>
+                <span>You ll receive SMS/Email updates about your order status</span>
               </li>
               <li className="flex items-start">
                 <span className="w-2 h-2 bg-purple-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>

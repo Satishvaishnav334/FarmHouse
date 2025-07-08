@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FiUser, FiMail, FiPhone, FiMapPin, FiShoppingBag, FiCheck } from 'react-icons/fi';
+// import { motion } from 'framer-motion';
+import { FiUser,  FiMapPin } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useCart } from '../Components/CartContext';
@@ -24,7 +24,7 @@ export default function Checkout() {
   const router = useRouter();
   const { data: session } = useSession();
   const { cart, clearCart } = useCart();
-  
+
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     email: '',
@@ -37,7 +37,7 @@ export default function Checkout() {
     },
     updateProfile: false,
   });
-  
+
   const [notes, setNotes] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -58,7 +58,7 @@ export default function Checkout() {
           if (response.ok) {
             const profile = await response.json();
             setUserProfile(profile);
-            
+
             // Pre-fill form with user data
             setCustomerInfo(prev => ({
               ...prev,
@@ -84,7 +84,7 @@ export default function Checkout() {
 
   const deliveryFee = cart.totalAmount < 500 ? 50 : 0;
   const finalAmount = cart.totalAmount + deliveryFee;
-
+console.log(userProfile)
   const handleInputChange = (field: string, value: string) => {
     if (field.startsWith('address.')) {
       const addressField = field.split('.')[1];
@@ -105,47 +105,47 @@ export default function Checkout() {
 
   const validateForm = (): boolean => {
     const { name, email, phone, address } = customerInfo;
-    
+
     if (!name.trim() || !email.trim() || !phone.trim()) {
       alert('Please fill in all personal information fields');
       return false;
     }
-    
+
     if (!address.street.trim() || !address.city.trim() || !address.state.trim() || !address.pinCode.trim()) {
       alert('Please fill in all address fields');
       return false;
     }
-    
+
     if (!/^\d{6}$/.test(address.pinCode)) {
       alert('Pin code must be 6 digits');
       return false;
     }
-    
+
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       alert('Please enter a valid email address');
       return false;
     }
-    
+
     if (!/^\d{10}$/.test(phone.replace(/\D/g, ''))) {
       alert('Please enter a valid 10-digit phone number');
       return false;
     }
-    
+
     return true;
   };
 
   const handlePlaceOrder = async () => {
     if (!validateForm()) return;
-    
+
     setIsLoading(true);
-    
+
     try {
       const orderData = {
         items: cart.items,
         customerInfo,
         notes,
       };
-      
+
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
@@ -153,7 +153,7 @@ export default function Checkout() {
         },
         body: JSON.stringify(orderData),
       });
-      
+
       if (response.ok) {
         const order = await response.json();
         clearCart();
@@ -178,7 +178,7 @@ export default function Checkout() {
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Customer Information Form */}
           <div className="lg:col-span-2 space-y-6">
@@ -188,7 +188,7 @@ export default function Checkout() {
                 <FiUser className="mr-2" />
                 Personal Information
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -202,7 +202,7 @@ export default function Checkout() {
                     placeholder="Enter your full name"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address *
@@ -215,7 +215,7 @@ export default function Checkout() {
                     placeholder="Enter your email"
                   />
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Phone Number *
@@ -230,14 +230,14 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-            
+
             {/* Delivery Address */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <FiMapPin className="mr-2" />
                 Delivery Address
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -251,7 +251,7 @@ export default function Checkout() {
                     placeholder="House/Flat number, Building name, Street"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     City *
@@ -264,7 +264,7 @@ export default function Checkout() {
                     placeholder="Enter city"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     State *
@@ -277,7 +277,7 @@ export default function Checkout() {
                     placeholder="Enter state"
                   />
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Pin Code *
@@ -292,7 +292,7 @@ export default function Checkout() {
                   />
                 </div>
               </div>
-              
+
               {session?.user && (
                 <div className="mt-4">
                   <label className="flex items-center">
@@ -309,7 +309,7 @@ export default function Checkout() {
                 </div>
               )}
             </div>
-            
+
             {/* Order Notes */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -325,12 +325,12 @@ export default function Checkout() {
               />
             </div>
           </div>
-          
+
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-24">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
-              
+
               {/* Order Items */}
               <div className="space-y-3 mb-4">
                 {cart.items.map((item) => (
@@ -343,15 +343,15 @@ export default function Checkout() {
                   </div>
                 ))}
               </div>
-              
+
               <hr className="my-4" />
-              
+
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-semibold">₹{cart.totalAmount}</span>
                 </div>
-                
+
                 <div className="flex justify-between">
                   <span className="text-gray-600">Delivery Fee</span>
                   <span className="font-semibold">
@@ -362,15 +362,15 @@ export default function Checkout() {
                     )}
                   </span>
                 </div>
-                
+
                 <hr />
-                
+
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
                   <span>₹{finalAmount}</span>
                 </div>
               </div>
-              
+
               <div className="mt-6">
                 <button
                   onClick={handlePlaceOrder}
@@ -380,7 +380,7 @@ export default function Checkout() {
                   {isLoading ? 'Placing Order...' : 'Place Order'}
                 </button>
               </div>
-              
+
               <div className="mt-4 text-center">
                 <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
                   <span>💳</span>

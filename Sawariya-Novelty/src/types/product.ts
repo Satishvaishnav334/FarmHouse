@@ -5,7 +5,8 @@ export interface Product {
   originalPrice: number;
   description: string;
   category: string;
-  image: string;
+  images: string[];
+  image: string; // keep for backward compatibility
   rating: number;
   badge: string;
   inStock: boolean;
@@ -35,7 +36,8 @@ export function convertToProduct(fallback: FallbackProduct): Product {
     originalPrice: fallback.originalPrice,
     description: fallback.description || '',
     category: fallback.category,
-    image: fallback.image,
+    images: [fallback.image],
+    image: fallback.image, // keep for backward compatibility
     rating: fallback.rating,
     badge: fallback.badge,
     inStock: true,

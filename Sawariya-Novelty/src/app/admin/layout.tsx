@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { 
-  FiHome, 
-  FiPackage, 
-  FiUsers, 
-  FiTrendingUp, 
-  FiSettings, 
+import {
+  FiHome,
+  FiPackage,
+  FiUsers,
+  FiTrendingUp,
+  FiSettings,
   FiLogOut,
   FiMenu,
   FiX
@@ -35,7 +35,7 @@ export default function AdminLayout({
 
   useEffect(() => {
     if (status === 'loading') return;
-    
+
     if (!session?.user || (session.user as any).role !== 'admin') {
       router.push('/auth/login');
     }
@@ -56,7 +56,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex-shrink-0`}>
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
           <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
           <button
@@ -66,7 +66,7 @@ export default function AdminLayout({
             <FiX className="h-6 w-6" />
           </button>
         </div>
-        
+
         <nav className="mt-6 px-3">
           {navigation.map((item) => (
             <Link
@@ -106,7 +106,7 @@ export default function AdminLayout({
       </div>
 
       {/* Main content */}
-      <div className="flex-1 lg:ml-0">
+      <div className="flex-1 lg:ml-0 overflow-hidden">
         {/* Top bar */}
         <div className="bg-white shadow-sm border-b border-gray-200 lg:hidden">
           <div className="flex items-center justify-between h-16 px-4">
@@ -121,7 +121,7 @@ export default function AdminLayout({
         </div>
 
         {/* Page content */}
-        <main className="p-6">
+        <main className="p-6  h-full mt-50">
           {children}
         </main>
       </div>

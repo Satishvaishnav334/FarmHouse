@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
               )}
             </Link>
           </motion.div>
-          
+
           {/* User Menu */}
           {status === "loading" ? (
             <div className="animate-pulse w-8 h-8 bg-gray-200 rounded-full"></div>
@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
                   </span>
                 </div>
               </motion.button>
-              
+
               <AnimatePresence>
                 {userMenuOpen && (
                   <motion.div
@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
                       <p className="text-sm font-medium text-gray-900">{session.user.name}</p>
                       <p className="text-xs text-gray-500">{session.user.email}</p>
                     </div>
-                    
+
                     <Link
                       href="/account"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
@@ -115,7 +115,7 @@ const Navbar: React.FC = () => {
                       <FiUser className="mr-3 h-4 w-4" />
                       My Account
                     </Link>
-                    
+
                     {(session.user as any).role === 'admin' && (
                       <Link
                         href="/admin"
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
                         Admin Panel
                       </Link>
                     )}
-                    
+
                     <button
                       onClick={() => {
                         setUserMenuOpen(false);
